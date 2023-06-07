@@ -13,7 +13,9 @@ var splashes = [
     "test'); DROP TABLE Splashes; --",
     "this here nyan is 1,000 millinyans",
     "chromanyan jumpscare",
-    "yes, i can double jump"
+    "yes, i can double jump",
+    "trinkets and baubles is canon to chromanyan lore",
+    "hoarder of netherite"
 ]
 
 function generateSplash() {
