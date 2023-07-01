@@ -15,7 +15,10 @@ var splashes = [
     "chromanyan jumpscare",
     "yes, i can double jump",
     "trinkets and baubles is canon to chromanyan lore",
-    "hoarder of netherite"
+    "hoarder of netherite",
+    "chromanother and nyanother",
+    "reaching far across these new frontiers",
+    "this is who i am"
 ]
 
 function generateSplash() {
