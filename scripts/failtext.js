@@ -7,6 +7,7 @@ var splashes = [
     "[Nyantent Deleted]",
     "nice link. unfortunately, your mother",
     "java.lang.NullPointerException",
+    "BLOWS UP?!",
     "ChromaNyan was ejected."
 ]
 

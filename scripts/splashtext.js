@@ -6,7 +6,6 @@ var splashes = [
     "\"not so anonymous\" luna37",
     "error: attempt to concatenate a nil value",
     "the leading cause of eye strain",
-    "BLOWS UP?!",
     "h doesn't stand for horny",
     "woag, the chromanyan",
     "memories: 0 entries",
@@ -18,7 +17,10 @@ var splashes = [
     "hoarder of netherite",
     "chromanother and nyanother",
     "reaching far across these new frontiers",
-    "this is who i am"
+    "this is who i am",
+    "ΘΔ",
+    "wanna see a magic trick? 💥",
+    "probably a fairy type"
 ]
 
 function generateSplash() {
