@@ -18,7 +18,7 @@ var splashes = [
     "chromanother and nyanother",
     "reaching far across these new frontiers",
     "this is who i am",
-    "ΘΔ",
+    "i am all of me",
     "wanna see a magic trick? 💥",
     "probably a fairy type"
 ]
