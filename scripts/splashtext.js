@@ -4,7 +4,6 @@ var splashes = [
     "your local cosmic feline",
     "now with 20% more transgender",
     "\"not so anonymous\" luna37",
-    "error: attempt to concatenate a nil value",
     "the leading cause of eye strain",
     "h doesn't stand for horny",
     "woag, the chromanyan",
