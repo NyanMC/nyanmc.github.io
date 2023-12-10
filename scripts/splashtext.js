@@ -12,6 +12,7 @@ var splashes = [
     "this here nyan is 1,000 millinyans",
     "chromanyan jumpscare",
     "yes, i can double jump",
+    "wowie talk about a room with my view",
     "trinkets and baubles is canon to chromanyan lore",
     "hoarder of netherite",
     "chromanother and nyanother",
@@ -19,7 +20,8 @@ var splashes = [
     "this is who i am",
     "i am all of me",
     "wanna see a magic trick? 💥",
-    "probably a fairy type"
+    "probably a fairy type",
+    "but do you remember how you got here?"
 ]
 
 function generateSplash() {

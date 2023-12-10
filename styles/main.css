@@ -19,3 +19,9 @@ p {
 #splashtext {
     color: violet;
 }
+
+#voided-img {
+    max-height: 400px;
+    max-width: 400px;
+    object-fit: scale-down;
+}
