@@ -13,7 +13,7 @@ var splashes = [
     "chromanyan jumpscare",
     "yes, i can double jump",
     "wowie talk about a room with my view",
-    "trinkets and baubles is canon to chromanyan lore",
+    "chromatic arsenal is canon to chromanyan lore",
     "hoarder of netherite",
     "chromanother and nyanother",
     "reaching far across these new frontiers",
@@ -21,7 +21,9 @@ var splashes = [
     "i am all of me",
     "wanna see a magic trick? 💥",
     "probably a fairy type",
-    "but do you remember how you got here?"
+    "but do you remember how you got here?",
+    "JAR transformation complete",
+    "formerly immensely gay"
 ]
 
 function generateSplash() {
