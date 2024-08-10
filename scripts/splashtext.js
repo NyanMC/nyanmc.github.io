@@ -28,6 +28,10 @@ var splashes = [
 
 function generateSplash() {
     var randomSplash = splashes[Math.floor(Math.random() * splashes.length)];
+    if (navigator.userAgent.includes("Nintendo 3DS")) {
+        $("#splashtext").text("holy fucking shit is that the Nintendo 3DS Internet Browser");
+        return;
+    }
     $("#splashtext").text(randomSplash);
 }
 
