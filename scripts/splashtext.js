@@ -28,7 +28,8 @@ var splashes = [
 
 function generateSplash() {
     var randomSplash = splashes[Math.floor(Math.random() * splashes.length)];
-    if (navigator.userAgent.includes("Nintendo 3DS")) {
+    // 3ds detection hopefully
+    if ((navigator.platform.indexOf("Nintendo 3DS") > -1) || (screen.pixelDepth == 16 && navigator.platform == "iPhone")) {
         $("#splashtext").text("holy fucking shit is that the Nintendo 3DS Internet Browser");
     } else {
         $("#splashtext").text(randomSplash);
