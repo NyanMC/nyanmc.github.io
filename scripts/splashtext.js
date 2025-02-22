@@ -5,7 +5,7 @@ var splashes = [
     "now with 20% more transgender",
     "\"not so anonymous\" luna37",
     "the leading cause of eye strain",
-    "h doesn't stand for horny",
+    // "h doesn't stand for horny",
     "woag, the chromanyan",
     "memories: 0 entries",
     "test'); DROP TABLE Splashes; --",
@@ -23,7 +23,9 @@ var splashes = [
     "probably a fairy type",
     "but do you remember how you got here?",
     "JAR transformation complete",
-    "formerly immensely gay"
+    "formerly immensely gay",
+    "was once called a weasel. that was a compliment",
+    "\"One day, somewhere in the future, my work will be quoted!\" -Minecraft splash text #313"
 ]
 
 function generateSplash() {

@@ -10,7 +10,8 @@ var splashes = [
     "java.lang.NullPointerException",
     "BLOWS UP?!",
     "MixinTransformerError: An unexpected critical error was encountered",
-    "ChromaNyan was ejected."
+    "ChromaNyan was ejected.",
+    "this page is out of logic!"
 ]
 
 function generateSplash() {
