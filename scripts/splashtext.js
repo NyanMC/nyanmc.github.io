@@ -63,14 +63,14 @@ function isTodaySpecial() {
 }
 
 function generateSplash() {
-    if (isTodaySpecial()) {
-        $("#splashtext").text("today is a special day...");
-        return;
-    }
-
     // 3ds detection hopefully
     if ((navigator.platform.indexOf("Nintendo 3DS") > -1) || (screen.pixelDepth == 16 && navigator.platform == "iPhone")) {
         $("#splashtext").text("is that the Nintendo 3DS Internet Browser? what an honor");
+        return;
+    }
+
+    if (isTodaySpecial()) {
+        $("#splashtext").text("today is a special day...");
         return;
     }
 
