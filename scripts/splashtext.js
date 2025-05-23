@@ -1,4 +1,4 @@
-const splashes = [
+var splashes = [
     "one of the space cats ever",
     "humanity is for chumps",
     "your local cosmic feline",
@@ -30,7 +30,7 @@ const splashes = [
     "have you met umbranyan yet"
 ]
 
-const specialDays = [
+var specialDays = [
     { // birthday
         "month": 3,
         "day": 24
@@ -50,10 +50,10 @@ const specialDays = [
 ]
 
 function isTodaySpecial() {
-    let curDate = new Date();
+    var curDate = new Date();
 
-    for (let i = 0; i < specialDays.length; i++) {
-        let element = specialDays[i];
+    for (var i = 0; i < specialDays.length; i++) {
+        var element = specialDays[i];
         if (curDate.getMonth() + 1 === element.month && curDate.getDate() === element.day) {
             return true;
         }
@@ -74,7 +74,7 @@ function generateSplash() {
         return;
     }
 
-    let randomSplash = splashes[Math.floor(Math.random() * splashes.length)];
+    var randomSplash = splashes[Math.floor(Math.random() * splashes.length)];
 
     $("#splashtext").text(randomSplash);
 }
