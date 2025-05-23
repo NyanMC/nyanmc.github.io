@@ -26,6 +26,11 @@ p {
     object-fit: scale-down;
 }
 
+.btnicon {
+    width: 32px;
+    height: 32px;
+}
+
 @media only screen and (min-width: 525px) {
     #voided-img {
         max-width: 500px;
