@@ -28,7 +28,8 @@ var splashes = [
     "\"One day, somewhere in the future, my work will be quoted!\" -Minecraft splash text #313",
     "check it out, i'm in the house, like carpet",
     "have you met umbranyan yet",
-    "some consider me cute. i have no way to confirm or deny"
+    "some consider me cute. i have no way to confirm or deny",
+    "ganon is such a dingus"
 ]
 
 var specialDays = [
