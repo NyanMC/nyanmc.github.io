@@ -110,6 +110,7 @@ canvas{
     <script type="module">
         import {
             Client,
+            Item,
         } from "https://unpkg.com/archipelago.js@2.0.2/dist/index.js";
 
         // https://stackoverflow.com/a/71574505
@@ -294,6 +295,7 @@ canvas{
                 [6, 0b01000000, 14],
         }
         const base_id = 19827373737
+        let checked_locations = [];
 
         //add item handler for gpio layer
         client.items.on("itemsReceived", (items, index) => {
@@ -317,6 +319,33 @@ canvas{
                 }
             }
         });
+
+        client.socket.on("locationInfo", (packet) => {
+            console.log("Location Info: ", packet);
+            packet.locations.forEach(location => {
+                if (true) {
+                    const item = new Item(
+                        client, location, client.players.self, client.players.findPlayer(location.player)
+                    );
+                    /*
+                        tell the pico-8 to play a funny little jingle based on whatever we just sent.
+                        corresponds to the value of a pattern + 1 (we can't use 0 because that means no data)
+                    */
+                    if (item.progression && item.useful) {
+                        gpio[35] = 5
+                    } else if (item.progression) {
+                        gpio[35] = 1
+                    } else if (item.useful) {
+                        gpio[35] = 2
+                    } else if (item.trap) {
+                        gpio[35] = 4
+                    } else if (item.filler) {
+                        gpio[35] = 3
+                    }
+                }
+            });
+        });
+
         // Connect to the Archipelago server
         function connect_to_server(event) {
             if (event !== null) {
@@ -336,6 +365,8 @@ canvas{
             }
             console.log(url)
             console.log(slot)
+
+            checked_locations = [];
 
 
             document.getElementById("status-connected").classList.add("default-hidden")
@@ -365,13 +396,16 @@ canvas{
         // })
 
         // add location handler for gpio layer
-        gpio.subscribe(function(newIndices) {
+        gpio.subscribe(async function(newIndices) {
             for (let loc in loc_flags) {
                 if ((gpio[loc_flags[loc][0]] & loc_flags[loc][1]) !== 0) {
+                    const locationId = base_id + loc_flags[loc][2]
                     if (loc === "victory") {
                         client.goal()
-                    } else {
-                        client.check(base_id + loc_flags[loc][2])
+                    } else if (!checked_locations.includes(locationId)) {
+                        client.check(locationId)
+                        await client.scout([locationId], 0);
+                        checked_locations.push(locationId);
                     }
                 }
             }
