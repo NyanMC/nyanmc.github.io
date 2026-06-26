@@ -1,0 +1,575 @@
+﻿<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PICO-8 AP Client</title>
+        <meta name="description" content="">
+
+<STYLE TYPE="text/css">
+<!--
+
+html {
+    color: white;
+}
+
+h1 {
+    color: #ff004d;
+    text-decoration: underline;
+    text-decoration-color: white;
+    margin-top: 0px;
+}
+
+.default-hidden {
+    display: none;
+}
+
+.submit-wrapper {
+    display: table-cell;
+}
+
+.status-wrapper {
+    width: 150px;
+
+}
+
+#status-connected {
+    color: green;
+}
+#status-failed {
+    color: red;
+}
+#status-connecting {
+    color: green;
+}
+#chat {
+    overflow-y: auto;
+    height: 20ch;
+    border: solid;
+    border-block-color: black;
+}
+
+
+
+.p8_menu_button{
+    opacity:0.3;
+    padding:4px;
+    display:table;
+    width:24px;
+    height:24px;
+    float:right;
+}
+
+@media screen and (min-width:512px) {
+    .p8_menu_button{
+        width:24px; margin-left:12px; margin-bottom:8px;
+    }
+}
+.p8_menu_button:hover{
+    opacity:1.0;
+    cursor:pointer;
+}
+
+canvas{
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+    border: 0px;
+    cursor: none;
+}
+
+
+.p8_start_button{
+    cursor:pointer;
+    background:url("data:image/png;base64,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");
+    -repeat center;
+    -webkit-background-size:cover; -moz-background-size:cover; -o-background-size:cover; background-size:cover;
+}
+
+.button_gfx{
+    stroke-width:2;
+    stroke: #ffffff;
+    stroke-opacity:0.4;
+    fill-opacity:0.2;
+    fill:black;
+}
+
+.button_gfx_icon{
+    stroke-width:3;
+    stroke: #909090;
+    stroke-opacity:0.7;
+    fill:none;
+}
+
+
+-->
+</STYLE>
+
+    <script type="text/javascript" src="pico8-gpio-listener.js"></script>
+    <script type="module">
+        import {
+            Client,
+            Item,
+        } from "https://unpkg.com/archipelago.js@2.0.2/dist/index.js";
+
+        // https://stackoverflow.com/a/71574505
+        var params = window.location.search.slice(1).split("&");
+        //convert the params to an object
+        var data = params.reduce((obj, param) => {
+          var pair = param.split("=");
+          return { ...obj,
+            [pair[0]]: decodeURIComponent(pair[1])
+          }
+        }, {});
+        //console.log({data});
+        //insert values by matching input name to data object key
+        const fillable_forms = ["Hostname", "Port", "Name", "Password"]
+        for (var index in fillable_forms) {
+            const key = fillable_forms[index]
+            if (key in data) {
+                document.getElementById(key).value = data[key]
+            }
+        }
+        // document.querySelectorAll("input").forEach(input => input.value = data[input.name]);
+
+        // Create a new Archipelago client
+        const client = new Client();
+
+        // start chat from phar
+        client.messages.on("message", onMessage);
+
+        function onMessage(text, nodes) {
+            // Plaintext to console, because why not?
+            console.log(text);
+
+            const chat = document.getElementById("chat");
+            const messageElement = document.createElement("div");
+
+            for (const node of nodes) {
+                const nodeElement = document.createElement("span");
+                nodeElement.innerText = node.text;
+
+                switch (node.type) {
+                    case "entrance":
+                        nodeElement.style.color = "#6495ED";
+                        break;
+
+                    case "location":
+                        nodeElement.style.color = "#00FF7F";
+                        break;
+
+                    case "color":
+                        // not really correct, but technically the only color nodes the server returns is "green" or "red"
+                        // so it's fine enough for an example.
+                        nodeElement.style.color = node.color;
+                        break;
+
+                    case "player":
+                        if (node.player.slot === client.players.self.slot) {
+                            // It's us!
+                            nodeElement.style.color = "#EE00EE";
+                        } else {
+                            // It's them!
+                            nodeElement.style.color = "#FAFAD2";
+                        }
+                        break;
+
+                    case "item": {
+                        // doesn't account for prog+useful or other combinations, but this is just as an example
+                        if (node.item.progression) {
+                            nodeElement.style.color = "#AF99EF";
+                        } else if (node.item.useful) {
+                            nodeElement.style.color = "#6D8BE8";
+                        } else if (node.item.trap) {
+                            nodeElement.style.color = "#FA8072";
+                        } else {
+                            nodeElement.style.color = "#00EEEE";
+                        }
+                    }
+
+                    // no special coloring needed
+                    case "text":
+                    default:
+                        break;
+                }
+
+                messageElement.appendChild(nodeElement);
+            }
+
+            chat.appendChild(messageElement);
+            messageElement.scrollIntoView(false);
+        }
+        // end chat from phar
+
+
+        const form = document.getElementById("connection_details")
+
+        //pico-8 related declarations
+        var gpio = getP8Gpio();
+
+        // used for shop checks
+        // wasteful on pins but we have 128 of them. it's probably fine
+        // [gpio pin, quantity, starting id]
+        const loc_pairs = {
+            "Diving Suit":
+                [0,8,1],
+            "Oxygen Mask":
+                [1,8,9],
+            "Backpack":
+                [2,7,17],
+            "Fins":
+                [3,7,24],
+            "Magnet":
+                [4,8,31],
+            "Raft Expansion":
+                [5,3,39],
+            "Jetpack":
+                [6,3,42],
+            "Radar":
+                [7,5,45],
+            "Gold Statue":
+                [8,1,50],
+        }
+
+
+        const loc_flags = {
+            "Tuna":
+                [9, 0b00000001, 51],
+            "Cod":
+                [9, 0b00000010, 52],
+            "Pollock":
+                [9, 0b00000100, 53],
+            "Mackerel":
+                [9, 0b00001000, 54],
+            "Flounder":
+                [9, 0b00010000, 55],
+            "Mahi":
+                [9, 0b00100000, 56],
+            "Halibut":
+                [9, 0b01000000, 57],
+            "Snapper":
+                [9, 0b10000000, 58],
+            "Grouper":
+                [10, 0b00000001, 59],
+            "Marlin":
+                [10, 0b00000010, 60],
+            "Pufferfish":
+                [10, 0b00000100, 61],
+            "Spikefin":
+                [10, 0b00001000, 62],
+            "Barracuda":
+                [10, 0b00010000, 63],
+            "Shark":
+                [10, 0b00100000, 64],
+            "Spacefish":
+                [10, 0b01000000, 65],
+            "Skyfish":
+                [10, 0b10000000, 66],
+            "Cloudswim":
+                [11, 0b00000001, 67],
+            "victory":
+                [11, 0b00000010, 68],
+        }
+
+        const item_pairs = {
+            "Diving Suit":
+                [12, 1],
+            "Oxygen Mask":
+                [13, 2],
+            "Backpack":
+                [14, 3],
+            "Fins":
+                [15, 4],
+            "Magnet":
+                [16, 5],
+            "Raft Expansion":
+                [17, 6],
+            "Jetpack":
+                [18, 7],
+            "Radar":
+                [19, 8],
+            "Gold Statue":
+                [20, 9],
+            "Money":
+                [21, 10],
+        }
+
+        const base_id = 0
+        let checked_locations = [];
+
+        //add item handler for gpio layer
+        client.items.on("itemsReceived", (items, index) => {
+            //if this is a sync packet reset all our item addresses without changing anything else
+            if (index == 0) {
+                for (let pair in item_pairs) {
+                    gpio[item_pairs[pair][0]] = 0
+                }
+            }
+            //go through all our item addresses and if they are not set, check the recieved items for their ap id, and set the gpio flag if we recieved it
+            //on the scale i expect pico-8 games to be, this will be good enough
+            for (let pair in item_pairs) {
+                for (let i=0; i<items.length; i++) {
+                    let item = items[i]
+                    if (base_id + item_pairs[pair][1] === item.id) {
+                        if (gpio[item_pairs[pair][0]] >= 100) {
+                            console.warn(`could not add ${pair}, exceeded cap of 100 (how???)`)
+                        } else {
+                            gpio[item_pairs[pair][0]] += 1
+                            console.log(`added item ${pair}. total: ${gpio[item_pairs[pair][0]]}`)
+                        }
+                    }
+                }
+            }
+        });
+
+        // Connect to the Archipelago server
+        function connect_to_server(event) {
+            if (event !== null) {
+                event.preventDefault()
+            }
+            var url = document.getElementById("Hostname").value + ":" + document.getElementById("Port").value
+            var slot = document.getElementById("Name").value
+            var password = document.getElementById("Password").value ? document.getElementById("Password").value : null
+            var conn_options = {
+                password: password
+            }
+            if ("Protocol" in data) {
+                var pro = data["Protocol"].split("://").pop().split("@")
+                url = pro[1]
+                slot = pro[0].split(":")[0]
+                conn_options["password"] = password ?? pro[0].split(":")[1]
+            }
+            console.log(url)
+            console.log(slot)
+
+            checked_locations = [];
+
+
+            document.getElementById("status-connected").classList.add("default-hidden")
+            document.getElementById("status-failed").classList.add("default-hidden")
+
+            document.getElementById("status-connecting").classList.remove("default-hidden")
+            client
+                .login(url, slot, "Build a Jetpack", conn_options)
+                .then(() => {
+                    console.log("Connected to the server");
+                    document.getElementById("status-connecting").classList.add("default-hidden")
+                    document.getElementById("status-connected").classList.remove("default-hidden")
+                    // You are now connected and authenticated to the server. You can add more code here if need be.
+                })
+                .catch((error) => {
+                    console.error("Failed to connect:", error);
+                    document.getElementById("status-connecting").classList.add("default-hidden")
+                    document.getElementById("status-failed").classList.remove("default-hidden")
+                    // Handle the connection error.
+                });
+        }
+        form.addEventListener("submit", connect_to_server);
+
+        // Disconnect from the server when unloading window.
+        // window.addEventListener("beforeunload", () => {
+        //     client.disconnect();
+        // })
+
+        // add location handler for gpio layer
+        gpio.subscribe(async function(newIndices) {
+            for (let loc in loc_flags) {
+                if ((gpio[loc_flags[loc][0]] & loc_flags[loc][1]) !== 0) {
+                    const locationId = base_id + loc_flags[loc][2]
+                    if (loc === "victory") {
+                        client.goal()
+                    } else if (!checked_locations.includes(locationId)) {
+                        client.check(locationId)
+                        checked_locations.push(locationId);
+                    }
+                }
+            }
+            for (let loc in loc_pairs) {
+                if (gpio[loc_pairs[loc][0]] > 0) {
+                    for (let i = 0; i < gpio[loc_pairs[loc][0]]; i++) {
+                        if (i >= loc_pairs[loc][1]) {
+                            warn("${loc} location somehow exceeded max bounds")
+                        } else {
+                            const locationId = base_id + loc_pairs[loc][2] + i
+                            if (!checked_locations.includes(locationId)) {
+                                client.check(locationId)
+                                checked_locations.push(locationId);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        if (data["auto"] === "True") {
+            console.log("autoconnecting")
+            connect_to_server(null)
+        }
+
+
+    </script>
+
+<body bgcolor=#303030>
+
+    <br>
+
+    <center><div>
+
+    <h1>Build a Jetpack Client</h1>
+
+
+    <div id="mainDiv">
+        <form id="connection_details">
+            <table><tr style="vertical-align: top;">
+                <td align="right">
+                    <label for="fname">Hostname:</label>
+                    <input type="text" id="Hostname" name="Hostname"><br>
+
+                    <label for="fname">Port:</label>
+                    <input type="text" id="Port" name="Port"><br>
+
+                    <label for="fname">Name:</label>
+                    <input type="text" id="Name" name="Name"><br>
+
+                    <label for="fname">Password:</label>
+                    <input type="password" id="Password" name="Password">
+                </td>
+
+                <td>
+                    <a style="color: #FF6E59;" href="https://github.com/NyanMC/build-a-jetpack">Source</a>
+                    <div class="submit-wrapper">
+                        <input type="submit" value="Submit"><br>
+                        <div class="status-wrapper">
+                            <div id="status-connected" class="default-hidden">Connected</div>
+                            <div id="status-failed" class="default-hidden">Connection Failed</div>
+                            <div id="status-connecting" class="default-hidden">Connecting...</div>
+                        </div>
+                    </div>
+                </td>
+            </tr></table>
+        </form>
+    </div></center></div>
+
+<div id="chat"></div>
+
+    <!-- start pico cart -->
+<script type="text/javascript" src="pico-window.js">
+
+</script>
+
+</head>
+
+<body style="padding:0px; margin:0px; background-color:#222; color:#ccc">
+
+
+
+<!-- Add any content above the cart here -->
+
+
+<div id="p8_frame_0" style="max-width:800px; max-height:800px; margin:auto;"> <!-- double function: limit size, and display only this div for touch devices -->
+<div id="p8_frame" style="display:flex; width:100%; max-width:95vw; height:100vw; max-height:60vh; margin:auto;">
+
+    <div id="p8_menu_buttons_touch" style="position:absolute; width:100%; z-index:10; left:0px;">
+        <div class="p8_menu_button" id="p8b_full"  style="float:left;margin-left:10px" onClick="p8_give_focus(); p8_request_fullscreen();"></div>
+        <div class="p8_menu_button" id="p8b_sound" style="float:left;margin-left:10px" onClick="p8_give_focus(); p8_create_audio_context(); Module.pico8ToggleSound();"></div>
+        <div class="p8_menu_button" id="p8b_close" style="float:right; margin-right:10px" onClick="p8_close_cart();"></div>
+    </div>
+
+    <div id="p8_container"
+        style="margin:auto; display:table;"
+        onclick="p8_create_audio_context(); p8_run_cart();">
+
+        <div id="p8_start_button" class="p8_start_button" style="width:100%; height:100%; display:flex;">
+            <img width=80 height=80 style="margin:auto;"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAABpklEQVR42u3au23DQBCEYUXOXIGKcujQXUgFuA0XIKgW90Q9oEAg+Ljd27vd2RsCf058gEDqhofPj+OB6SMCAQlIQAIyAhKQgARkBAQDnM6XSRsB7/2e/tSA0//12fCAKsQX3ntDA4oRFwBRIc0AixE38BAhTQGLEAsBUSDNAXcRhYDRIZsAPlp99VECRoXsDpgN0g0wC6Q7IDpkGEBUyG6A0+vKBtkdMBukG2AWSHdAdMgwgKiQ4QDRIMMCokCGB4wOCQPYFVKw2cABNocUjl6wgE0gFashPKAZpHJ2TQNYBVmxW6cDFENWDv9pAUshCVgJScBKSAISkD9hPkT4GkNAMdzepyj8Kye852EBLe51CZHHWQK4JcThD1SlcHPEYY/0a+A0n6SkGZV6w6WZNb3g4Id1b7hwgGhwYQBR4dwB0eHcALPAdQfMBhcOEA0uDCAqnDsgOpwbYBa4poA/31+rZYFrBriFpwGMCtcEcA9PAhgdzhywBK8EEQXOFFCCtwaIBmcGKMWbI6LCmQBq8R6hw5kAMgISkIAEJCAjIAEJSEBGQI9ukV7lRn9nD+gAAAAASUVORK5CYII="/>
+        </div>
+
+        <div id="p8_playarea" style="display:none; margin:auto;
+                -webkit-user-select:none; -moz-user-select: none; user-select: none; -webkit-touch-callout:none;
+        ">
+
+            <div  id="touch_controls_background"
+                  style=" pointer-events:none; display:none; background-color:#000;
+                         position:fixed; top:0px; left:0px; border:0; width:100vw; height:100vh">
+                &nbsp
+            </div>
+
+            <div style="display:flex; position:relative">
+                <!-- pointer-events turned off for mobile in p8_update_layout because need for desktop mouse -->
+                <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault();" >
+                </canvas>
+                <div class=p8_menu_buttons id="p8_menu_buttons" style="margin-left:10px;">
+                    <div class="p8_menu_button" style="position:absolute; bottom:125px" id="p8b_controls" onClick="p8_give_focus(); Module.pico8ToggleControlMenu();"></div>                    
+                    <div class="p8_menu_button" style="position:absolute; bottom:90px" id="p8b_pause" onClick="p8_give_focus(); Module.pico8TogglePaused(); p8_update_layout_hash = -22;"></div>
+                    <div class="p8_menu_button" style="position:absolute; bottom:55px" id="p8b_sound" onClick="p8_give_focus(); p8_create_audio_context(); Module.pico8ToggleSound();"></div>
+                    <div class="p8_menu_button" style="position:absolute; bottom:20px" id="p8b_full" onClick="p8_give_focus(); p8_request_fullscreen();"></div>
+                </div>
+            </div>
+
+
+            <!-- display after first layout update -->
+            <div  id="touch_controls_gfx"
+                  style=" pointer-events:none; display:table; 
+                         position:fixed; top:0px; left:0px; border:0; width:100vw; height:100vh">
+
+                    <img src="" id="controls_right_panel" style="position:absolute; opacity:0.5;">
+                    <img src="" id="controls_left_panel" style="position:absolute;  opacity:0.5;">
+                        
+            
+            </div> <!-- touch_controls_gfx -->
+
+            <!-- used for clipboard access & keyboard input; displayed and used by PICO-8 only once needed. can be safely removed if clipboard / key presses not needed. -->
+            <!-- (needs to be inside p8_playarea so that it still works under Chrome when fullscreened) -->
+            <!-- 0.2.5: added "display:none"; pico8.js shows on demand to avoid mac osx accent character selector // https://www.lexaloffle.com/bbs/?tid=47743 -->
+
+            <textarea id="codo_textarea" class="emscripten" style="display:none; position:absolute; left:-9999px; height:0px; overflow:hidden"></textarea>
+
+        </div> <!--p8_playarea -->
+
+    </div> <!-- p8_container -->
+
+</div> <!-- p8_frame -->
+</div> <!-- p8_frame_0 size limit -->
+
+<script type="text/javascript">
+
+    p8_update_layout();
+    p8_update_button_icons();
+
+    var canvas = document.getElementById("canvas");
+    Module = {};
+    Module.canvas = canvas;
+
+    // from @ultrabrite's shell: test if an AudioContext can be created outside of an event callback.
+    // If it can't be created, then require pressing the start button to run the cartridge
+
+    if (p8_autoplay)
+    {
+        var temp_context = new AudioContext();
+        temp_context.onstatechange = function ()
+        {
+            if (temp_context.state=='running')
+            {
+                p8_run_cart();
+                temp_context.close();
+            }
+        };
+    }
+
+    // pointer lock request needs to be inside a canvas interaction event
+    // pico8_state.request_pointer_lock is true when 0x5f2d bit 0 and bit 2 are set -- poke(0x5f2d,0x5) 
+    // note on mouse acceleration for future: // https://github.com/w3c/pointerlock/pull/49
+    canvas.addEventListener("click", function()
+    {
+        if (!p8_touch_detected)
+            if (pico8_state.request_pointer_lock)
+                canvas.requestPointerLock();
+    });
+    
+</script>
+
+    <!-- end pico cart -->
+
+
+</body></html>
