@@ -298,6 +298,27 @@ canvas{
 
         const base_id = 0
         let checked_locations = [];
+        let deathLinkOn = false;
+
+        function connectedListener(packet) {
+            console.log("we got here");
+            console.log(packet.slot_data.options);
+            let optionsByte = 0;
+            if (packet.slot_data.options.death_link) {
+                optionsByte += 1;
+                deathLinkOn = true;
+            }
+            if (packet.slot_data.options.harsh_pressure) {
+                optionsByte += 2;
+            }
+            gpio[40] = optionsByte;
+        }
+
+        client.socket.on("connected", connectedListener);
+
+        client.deathLink.on("deathReceived", (source, string, time) => {
+            gpio[41] = 1;
+        });
 
         //add item handler for gpio layer
         client.items.on("itemsReceived", (items, index) => {
@@ -358,6 +379,9 @@ canvas{
                     document.getElementById("status-connecting").classList.add("default-hidden")
                     document.getElementById("status-connected").classList.remove("default-hidden")
                     // You are now connected and authenticated to the server. You can add more code here if need be.
+                    if (deathLinkOn) {
+                        client.deathLink.enableDeathLink();
+                    }
                 })
                 .catch((error) => {
                     console.error("Failed to connect:", error);
@@ -400,6 +424,10 @@ canvas{
                         }
                     }
                 }
+            }
+            if (gpio[42] > 0) {
+                gpio[42] = 0;
+                client.deathLink.sendDeathLink(client.players.self.alias,client.players.self.alias+" drowned.");
             }
         });
         if (data["auto"] === "True") {
