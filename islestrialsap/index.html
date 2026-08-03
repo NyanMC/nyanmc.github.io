@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>PICO-8 AP Client</title>
+        <title>Isles of Trials Client</title>
         <meta name="description" content="">
 
 <STYLE TYPE="text/css">
@@ -280,23 +280,41 @@ canvas{
                 [5, 0b01000000, 6],
             "green key":
                 [5, 0b10000000, 7],
-            "heart container 1":
-                [6, 0b00000001, 8],
+            // deprecated, but still exist for legacy reasons
             "heart container 2":
                 [6, 0b00000010, 9],
             "heart container 3":
                 [6, 0b00000100, 10],
-            "swift feather 1":
-                [6, 0b00001000, 11],
             "swift feather 2":
                 [6, 0b00010000, 12],
             "swift feather 3":
                 [6, 0b00100000, 13],
-            "mysterious shape":
-                [6, 0b01000000, 14],
+        }
+
+        const item_pairs = {
+            "mysterious_shape":
+                [8, 14],
+            "heart container":
+                [9, 8],
+            "swift feather":
+                [10, 11],
+            "temporary heart":
+                [11, 15],
         }
         const base_id = 19827373737
         let checked_locations = [];
+
+        function connectedListener(packet) {
+            console.log("we got here");
+            console.log(packet.slot_data);
+            let optionsByte = 0;
+            if (packet.slot_data.player_sprite) {
+                optionsByte += 1;
+            }
+            gpio[40] = optionsByte;
+        }
+
+        client.socket.on("connected", connectedListener);
 
         //add item handler for gpio layer
         client.items.on("itemsReceived", (items, index) => {
@@ -304,6 +322,9 @@ canvas{
             if (index == 0) {
                 for (let flag in item_flags) {
                     gpio[item_flags[flag][0]] &= (~item_flags[flag][1] << 28 >>> 28)
+                }
+                for (let pair in item_pairs) {
+                    gpio[item_pairs[pair][0]] = 0
                 }
             }
             //go through all our item addresses and if they are not set, check the recieved items for their ap id, and set the gpio flag if we recieved it
@@ -315,6 +336,19 @@ canvas{
                         if (base_id + item_flags[flag][2] === item.id) {
                             console.log(`adding item ${flag}`)
                             gpio[item_flags[flag][0]] |= item_flags[flag][1]
+                        }
+                    }
+                }
+            }
+            for (let pair in item_pairs) {
+                for (let i=0; i<items.length; i++) {
+                    let item = items[i]
+                    if (base_id + item_pairs[pair][1] === item.id) {
+                        if (gpio[item_pairs[pair][0]] >= 100) {
+                            console.warn(`could not add ${pair}, exceeded cap of 100 (how???)`)
+                        } else {
+                            gpio[item_pairs[pair][0]] += 1
+                            console.log(`added item ${pair}. total: ${gpio[item_pairs[pair][0]]}`)
                         }
                     }
                 }
