@@ -426,6 +426,11 @@ canvas{
                     console.log("Connected to the server");
                     document.getElementById("status-connecting").classList.add("default-hidden")
                     document.getElementById("status-connected").classList.remove("default-hidden")
+                    document.getElementById("collapseconnect").style.visibility = 'hidden'
+
+                    if (collapseOnConnect) {
+                        document.getElementById("connection_details").style.visibility = 'collapse'
+                    }
                     // You are now connected and authenticated to the server. You can add more code here if need be.
                     if (deathLinkOn) {
                         client.deathLink.enableDeathLink();
@@ -502,6 +507,7 @@ canvas{
                     <a style="color: #FF6E59;" href="https://github.com/NyanMC/ap-celesteclassic">Source</a>
                     <div class="submit-wrapper">
                         <input type="submit" value="Submit"><br>
+                        <input type="button" value="Collapse when connected: OFF" id="collapseconnect" onclick="alterCollapse(this)"><br>
                         <div class="status-wrapper">
                             <div id="status-connected" class="default-hidden">Connected</div>
                             <div id="status-failed" class="default-hidden">Connection Failed</div>
@@ -518,6 +524,19 @@ canvas{
     <!-- start pico cart -->
 <script type="text/javascript" src="pico-window.js">
 
+</script>
+
+<script>
+    var collapseOnConnect = false;
+    function alterCollapse(btn) {
+        collapseOnConnect = !collapseOnConnect;
+        
+        if (collapseOnConnect) {
+            btn.value = "Collapse when connected: ON";
+        } else {
+            btn.value = "Collapse when connected: OFF";
+        }
+    }    
 </script>
 
 </head>
