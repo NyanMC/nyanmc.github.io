@@ -345,7 +345,7 @@ canvas{
 
         function connectedListener(packet) {
             console.log("we got here");
-            console.log(packet.slot_data.options);
+            console.log(packet.slot_data);
             let optionsByte = 0;
             if (packet.slot_data.options.death_link) {
                 optionsByte += 1;
