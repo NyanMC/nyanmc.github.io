@@ -301,12 +301,50 @@ canvas{
             "temporary heart":
                 [11, 15],
         }
+
+        // left: in-game sprite to use. right: list of valid keywords to show that sprite
+        // this is gross. there's almost certainly a better way to do this
+        const item_graphics = {
+            "sword":
+                [64, ["weapon", "sword"]],
+            "pickaxe":
+                [80, ["pick", "tool"]],
+            "bubble":
+                [67, ["bubble", "sphere", "circle", "orb", "blue boosters"]],
+            "tempheart":
+                [75, ["temporary heart"]],
+            "heart":
+                [68, ["heart", "life", "health", "regen"]],
+            "feather":
+                [69, ["feather", "speed", "fly", "flight", "swift", "wing"]],
+            "fireball":
+                [70, ["fire", "magic", "spell"]],
+            "greenkey":
+                [76, ["green key", "big key", "boss key"]],
+            "key":
+                [71, ["key", "unlock"]],
+            "shape":
+                [72, ["shape", "triforce", "time piece"]],
+            "spikeboots":
+                [74, ["spike boots"]],
+            "boots":
+                [73, ["boots", "run", "sprint"]],
+            "trophy":
+                [77, ["trophy", "victory", "goal"]],
+            "blade":
+                [85, ["trap", "blade", "spinner", "spike"]],
+            "slash":
+                [99, ["slash", "cat", "clone", "player"]],
+            "misty":
+                [105, ["misty", "mystical", "fox"]]
+        }
+
         const base_id = 19827373737
         let checked_locations = [];
 
         function connectedListener(packet) {
-            console.log("we got here");
-            console.log(packet.slot_data);
+            //console.log("we got here");
+            //console.log(packet.slot_data);
             let optionsByte = 0;
             if (packet.slot_data.player_sprite) {
                 optionsByte += 1;
@@ -362,20 +400,38 @@ canvas{
                     const item = new Item(
                         client, location, client.players.self, client.players.findPlayer(location.player)
                     );
+
+                    const itemName = item.name;
                     /*
                         tell the pico-8 to play a funny little jingle based on whatever we just sent.
                         corresponds to the value of a pattern + 1 (we can't use 0 because that means no data)
                     */
                     if (item.progression && item.useful) {
-                        gpio[35] = 5
+                        gpio[35] = 5;
                     } else if (item.progression) {
-                        gpio[35] = 1
+                        gpio[35] = 1;
                     } else if (item.useful) {
-                        gpio[35] = 2
+                        gpio[35] = 2;
                     } else if (item.trap) {
-                        gpio[35] = 4
+                        gpio[35] = 4;
                     } else if (item.filler) {
-                        gpio[35] = 3
+                        gpio[35] = 3;
+                    }
+
+                    for (let item in item_graphics) {
+                        let found = false;
+                        for (let keyword of item_graphics[item][1]) {
+                            
+                            if (itemName.toLowerCase().includes(keyword)) {
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (found) {
+                            gpio[34] = item_graphics[item][0];
+                            break;
+                        }
                     }
                 }
             });
