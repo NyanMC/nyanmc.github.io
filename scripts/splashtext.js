@@ -5,7 +5,6 @@ var splashes = [
     "now with 20% more transgender",
     "\"not so anonymous\" luna37",
     "the leading cause of eye strain",
-    // "h doesn't stand for horny",
     "woag, the chromanyan",
     "memories: 0 entries",
     "test'); DROP TABLE Splashes; --",
