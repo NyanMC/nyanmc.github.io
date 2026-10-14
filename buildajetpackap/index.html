@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>PICO-8 AP Client</title>
+        <title>Build a Jetpack Client</title>
         <meta name="description" content="">
 
 <STYLE TYPE="text/css">
@@ -112,7 +112,7 @@ canvas{
         import {
             Client,
             Item,
-        } from "https://unpkg.com/archipelago.js@2.0.2/dist/index.js";
+        } from "https://unpkg.com/archipelago.js@2.0.4/dist/index.js";
 
         // https://stackoverflow.com/a/71574505
         var params = window.location.search.slice(1).split("&");
@@ -177,8 +177,9 @@ canvas{
                         break;
 
                     case "item": {
-                        // doesn't account for prog+useful or other combinations, but this is just as an example
-                        if (node.item.progression) {
+                        if (node.item.progression && node.item.useful) {
+                            nodeElement.style.color = "#FFDF00";
+                        } else if (node.item.progression) {
                             nodeElement.style.color = "#AF99EF";
                         } else if (node.item.useful) {
                             nodeElement.style.color = "#6D8BE8";
@@ -294,6 +295,14 @@ canvas{
                 [20, 9],
             "Money":
                 [21, 10],
+            "Hostile Trap":
+                [22, 11],
+            "Rapid Dive":
+                [23, 12],
+            "Shield":
+                [24, 13],
+            "Insurance":
+                [25, 14],
         }
 
         const base_id = 0
