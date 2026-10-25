@@ -42,13 +42,13 @@ var specialDays = [
         "month": 5,
         "day": 24
     },
+    { // first release of isles of trials archipelago
+        "month": 6,
+        "day": 20
+    },
     { // listed creation date of chromatic arsenal
         "month": 8,
         "day": 6
-    },
-    { // date my gf became my gf
-        "month": 11,
-        "day": 29
     }
 ]
 
