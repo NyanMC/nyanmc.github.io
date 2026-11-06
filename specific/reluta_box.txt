@@ -1,0 +1,29 @@
+The Lunyar System Reluta Cardboard Box Sanitization Guidelines
+
+When one of our asyncs concludes, all submitted yamls are submitted to Elire, Astra, Vei for use in their Reluta async.
+Yamls are altered using the following guidelines in order to maintain anonymity and fairness. This only affects Reluta,
+and does not affect the slot played in the original async in any way, as this happens long after generation.
+Nothing extra is required from the yaml submitter, this is done by us.
+
+1. All games which are not allowed in AP main are deleted, such as those limited to After Dark or the Unofficial server.
+2. Any games which have been /released due to issues or inactivity are deleted.
+3. If any users express a request not to have their yaml submitted to Reluta, their yamls will also be deleted.
+4. Games submitted by the same person are recombined into a single yaml, as multiworld.gg forcefully splits them apart.
+5. All references to multiworld.gg (description mentioning MWGG, required version of 0.7.x, allow_collecting_from) are removed.
+6. All slot names are renamed, typically following a format of game-yamlnumber. The yaml is renamed to sanitized-yamlnumber.
+7. Game-specific steps are followed for applicable games (see below).
+8. If admin cheats were used on a game (usually /send or /send_location), the yaml may receive changes to disable problematic options or exclude locations.
+9. All yamls are packaged into a zip titled LunyarSystem(identifier)Yamls-sanitized.zip and uploaded to #cardboard-box-turn-in-flap in the Reluta Archipelago Side Server.
+
+Game-specific steps:
+
+Celeste (Open World):
+- If golden strawberries have been enabled with an amnesty higher than 1, golden strawberries will be disabled.
+- If the logic difficulty was set to assist mode, golden strawberries will be disabled.
+- If the goal was set to poetry slam, it is changed to the first enabled goal level in the priority order of Farewell > 8C > 7C > 8B > 7B > Empty Space > 8A > 7A.
+- Goal checkpointsanity will be turned on if checkpointsanity is enabled and the goal level was changed due to poetry slam.
+- Lock goal level will be turned off if the goal level was changed due to poetry slam to one with a high number of locations (particularly 7A, or farewell with binosanity).
+Rhythm Heaven Advance:
+- Exempt from step 1 due to the following steps.
+- The "patches" option is removed.
+- The game name is changed to Rhythm Tengoku.

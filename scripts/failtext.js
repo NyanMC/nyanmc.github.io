@@ -11,7 +11,9 @@ var splashes = [
     "BLOWS UP?!",
     "MixinTransformerError: An unexpected critical error was encountered",
     "ChromaNyan was ejected.",
-    "this page is out of logic!"
+    "this page is out of logic!",
+    "the room between...",
+    "ILLEGAL INSTRUCTION"
 ]
 
 function generateSplash() {
