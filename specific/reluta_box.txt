@@ -1,5 +1,12 @@
 The Lunyar System Reluta Cardboard Box Sanitization Guidelines
 
+tl;dr: Most yamls submitted to our asyncs will be reused in the Reluta async. We modify the yamls before sending them over,
+including renaming slots to remove player names. This process is done by us, you don't have to do anything special. Yamls
+for AD/unofficial games are not included. If you would rather not have your yaml included, please inform us, preferably
+through a comment at the top of your yaml or the yaml description.
+
+
+
 When one of our asyncs concludes, all submitted yamls are submitted to Elire, Astra, Vei for use in their Reluta async.
 Yamls are altered using the following guidelines in order to maintain anonymity and fairness. This only affects Reluta,
 and does not affect the slot played in the original async in any way, as this happens long after generation.
@@ -21,8 +28,8 @@ Celeste (Open World):
 - If golden strawberries have been enabled with an amnesty higher than 1, golden strawberries will be disabled.
 - If the logic difficulty was set to assist mode, golden strawberries will be disabled.
 - If the goal was set to poetry slam, it is changed to the first enabled goal level in the priority order of Farewell > 8C > 7C > 8B > 7B > Empty Space > 8A > 7A.
-- Goal checkpointsanity will be turned on if checkpointsanity is enabled and the goal level was changed due to poetry slam.
-- Lock goal level will be turned off if the goal level was changed due to poetry slam to one with a high number of locations (particularly 7A, or farewell with binosanity).
+- Goal checkpointsanity will be turned on if checkpointsanity is enabled and the goal was changed due to poetry slam.
+- Lock goal level will be turned off if the goal was changed (due to poetry slam) to one with a high number of locations (particularly 7A, or farewell with binosanity).
 Rhythm Heaven Advance:
 - Exempt from step 1 due to the following steps.
 - The "patches" option is removed.
