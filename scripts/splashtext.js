@@ -46,9 +46,9 @@ var specialDays = [
         "month": 6,
         "day": 20
     },
-    { // listed creation date of chromatic arsenal
+    { // listed creation date of the system
         "month": 8,
-        "day": 6
+        "day": 18
     }
 ]
 
