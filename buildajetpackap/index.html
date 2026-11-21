@@ -391,6 +391,22 @@ canvas{
                     if (deathLinkOn) {
                         client.deathLink.enableDeathLink();
                     }
+
+                    let checkLocs = client.room.checkedLocations;
+                    console.log(checkLocs);
+                    // what shop locations have been checked? sync this to the cart
+                    for (let loc in loc_pairs) {
+                        let pin = loc_pairs[loc][0];
+                        let amount = loc_pairs[loc][1];
+                        let id = loc_pairs[loc][2];
+                        let numChecked = 0;
+
+                        for (let i=0;i<amount;i++) {
+                            if (!checkLocs.includes(id+i)) break;
+                            numChecked++;
+                        }
+                        gpio[pin] = numChecked;
+                    }
                 })
                 .catch((error) => {
                     console.error("Failed to connect:", error);
