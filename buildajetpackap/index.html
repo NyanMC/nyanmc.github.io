@@ -305,6 +305,20 @@ canvas{
                 [25, 14],
         }
 
+        /*
+            gpio pin reference:
+            0-8: shop locations
+            9-11: fishsanity locations and victory
+            12-20: vanilla upgrades
+            21: money filler
+            22: hostile trap
+            23-25: custom upgrades
+            26-39: unused
+            40: options byte
+            41: (deathlink) 1 if someone else died
+            42: (deathlink) 1 if we died
+        */
+
         const base_id = 0
         let checked_locations = [];
         let deathLinkOn = false;
@@ -319,6 +333,12 @@ canvas{
             }
             if (packet.slot_data.options.harsh_pressure) {
                 optionsByte += 2;
+            }
+            if (packet.slot_data.options.gold_statue > 0) {
+                optionsByte += 4;
+            }
+            if (packet.slot_data.options.nerf_sky_fish) {
+                optionsByte += 8;
             }
             gpio[40] = optionsByte;
         }
